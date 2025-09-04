@@ -10,31 +10,25 @@ const ScoresPanel = () => {
     const loadLeaderboard = async () => {
       try {
         const result = await apiRequest('/leaderboard');
-        
         if (result.leaderboard.length === 0) {
-          console.log("No hay puntuaciones registradas");
           setTopScores([]);
         } else {
-          console.log("Puntuaciones cargadas:", result.leaderboard);
           setTopScores(result.leaderboard);
         }
-        
       } catch (error) {
-        console.error('Error al cargar leaderboard:', error.message);
         setError(error.message);
       } finally {
         setIsLoading(false);
       }
     };
-
     loadLeaderboard();
   }, []);
 
   if (isLoading) {
     return (
       <div className="scores-panel">
-        <h2 className="scores-title">Mejores Puntuaciones</h2>
-        <p>Cargando puntuaciones...</p>
+        <h2 className="scores-title">🏆 Mejores Puntuaciones</h2>
+        <p className="scores-note">Cargando...</p>
       </div>
     );
   }
@@ -42,8 +36,8 @@ const ScoresPanel = () => {
   if (error) {
     return (
       <div className="scores-panel">
-        <h2 className="scores-title">Mejores Puntuaciones</h2>
-        <p>Error al cargar las puntuaciones</p>
+        <h2 className="scores-title">🏆 Mejores Puntuaciones</h2>
+        <p className="scores-note">Error al cargar</p>
       </div>
     );
   }
@@ -51,27 +45,32 @@ const ScoresPanel = () => {
   if (topScores.length === 0) {
     return (
       <div className="scores-panel">
-        <h2 className="scores-title">Mejores Puntuaciones</h2>
-        <p>No hay puntuaciones registradas aún</p>
+        <h2 className="scores-title">🏆 Mejores Puntuaciones</h2>
+        <p className="scores-note">No hay registros aún</p>
       </div>
     );
   }
 
   return (
     <div className="scores-panel">
-      <h2 className="scores-title">Mejores Puntuaciones</h2>
-      
-      <ol className="scores-list">
-        {topScores.map((score, index) => (
-          <li key={index}>
-            {index + 1}. {score.username} - {score.score} pts
-          </li>
+      <h2 className="scores-title">🏆 Mejores Puntuaciones</h2>
+
+      <div className="podium">
+        {topScores.slice(0, 3).map((score, index) => (
+          <div
+            key={index}
+            className={`podium-place place-${index + 1}`}
+          >
+            <span className="position">
+              {index === 0 ? "👑" : index + 1}
+            </span>
+            <span className="username">{score.username}</span>
+            <span className="points">{score.score} pts</span>
+          </div>
         ))}
-      </ol>
-      
-      <p className="scores-note">
-        Menos pasos = mejor puntuación
-      </p>
+      </div>
+
+      <p className="scores-note">⚡ Menos pasos = mejor puntuación</p>
     </div>
   );
 };

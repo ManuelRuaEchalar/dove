@@ -3,6 +3,7 @@ const ThemeToggle = ({ mode, gameStyle, onChangeMode, onChangeGameStyle }) => {
     <div className="theme-toggle">
       {/* Modo global */}
       <div className="toggle-group">
+        <span className="toggle-label">Mode</span>
         <button
           className={mode === "dark" ? "active" : ""}
           onClick={() => onChangeMode("dark")}
@@ -19,6 +20,7 @@ const ThemeToggle = ({ mode, gameStyle, onChangeMode, onChangeGameStyle }) => {
 
       {/* Estilo de juego */}
       <div className="toggle-group">
+        <span className="toggle-label">Style</span>
         <button
           className={gameStyle === "abstract" ? "active" : ""}
           onClick={() => onChangeGameStyle("abstract")}

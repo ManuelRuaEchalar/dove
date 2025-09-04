@@ -59,52 +59,69 @@ body.light {
     color: #333333;
 }
 
-/* Theme Toggle */
-
+/* Contenedor general */
 .theme-toggle {
   position: absolute;
   top: 30px;
   right: 50px;
   z-index: 10;
   display: flex;
-  gap: 12px;
+  gap: 20px;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
 }
 
+/* Grupo */
 .toggle-group {
   display: flex;
-  gap: 8px;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 10px;
+  border-radius: 30px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
 }
 
+/* Etiqueta */
+.toggle-label {
+  font-size: 11px;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  align-self: center;
+  margin-right: 6px;
+}
+
+/* Botones */
 .theme-toggle button {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  border: none;
   color: inherit;
-  padding: 8px 16px;
-  font-size: 12px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 20px;
   cursor: pointer;
-  border-radius: 4px;
   transition: all 0.3s ease;
 }
 
-.theme-toggle button:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
+/* Activo */
 .theme-toggle button.active {
-  border: 2px solid #4cafef;
-  font-weight: bold;
+  background: #4cafef;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 0 8px rgba(76, 175, 239, 0.6);
 }
 
-.home-container.light .theme-toggle button {
-  background: rgba(0, 0, 0, 0.1);
-  border-color: rgba(0, 0, 0, 0.2);
+/* Tema claro */
+.home-container.light .toggle-group {
+  background: rgba(0, 0, 0, 0.07);
 }
 
-.home-container.light .theme-toggle button:hover {
-  background: rgba(0, 0, 0, 0.15);
+.home-container.light .theme-toggle button.active {
+  background: #4cafef;
+  color: #fff;
 }
-
-
 
 /* Particles */
 .particles {
@@ -117,31 +134,6 @@ body.light {
     z-index: 1;
 }
 
-.wind-particle {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 5;
-}
-
-.home-container.light .wind-particle {
-    background: rgba(0, 0, 0, 0.8);
-}
-.particle {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    animation: float 8s infinite linear;
-}
-
-.home-container.light .particle {
-    background: rgba(0, 0, 0, 0.2);
-}
 
 /* Main Content */
 .main-content {
@@ -163,39 +155,82 @@ body.light {
     align-items: center;
 }
 
-/* Intro Panel */
+/* Contenedor principal */
 .intro-panel {
-    text-align: left;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    border: 1px solid transparent;
-    box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
-    animation: glowingBorder 3s ease-in-out infinite;
+  max-width: 500px;
+  padding: 28px 32px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 191, 255, 0.25);
+  backdrop-filter: blur(10px);
+  animation: fadeIn 1.2s ease forwards, floating 6s ease-in-out infinite;
+  transform: translateY(0);
+  font-family: "Segoe UI", "Poppins", sans-serif;
 }
 
+/* Tema claro */
 .home-container.light .intro-panel {
-    background: rgba(0, 0, 0, 0.05);
-    box-shadow: 0 0 15px rgba(30, 144, 255, 0.3);
-    animation: glowingBorderLight 3s ease-in-out infinite;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 25px rgba(30, 144, 255, 0.25);
 }
 
+/* Título */
 .intro-panel h1 {
-    font-size: 36px;
-    font-weight: normal;
-    margin-bottom: 20px;
-    color: inherit;
+  font-size: 40px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: inherit;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  animation: slideDown 1s ease;
 }
 
+/* Párrafo */
 .intro-panel p {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 400;
 }
 
 .home-container.light .intro-panel p {
-    color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.65);
 }
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
 
 /* Game Panel */
 .game-panel {
@@ -244,57 +279,113 @@ body.light {
     color: rgba(0, 0, 0, 0.4);
 }
 
-/* Scores Panel */
+/* Contenedor general */
 .scores-panel {
-    text-align: right;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    border: 1px solid transparent;
-    box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
-    animation: glowingBorder 3s ease-in-out infinite;
+  text-align: center;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 191, 255, 0.25);
+  backdrop-filter: blur(10px);
+  font-family: "Segoe UI", "Poppins", sans-serif;
+  animation: fadeIn 1.2s ease forwards;
 }
 
+/* Tema claro */
 .home-container.light .scores-panel {
-    background: rgba(0, 0, 0, 0.05);
-    box-shadow: 0 0 15px rgba(30, 144, 255, 0.3);
-    animation: glowingBorderLight 3s ease-in-out infinite;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 25px rgba(30, 144, 255, 0.25);
 }
 
+/* Título */
 .scores-title {
-    font-size: 16px;
-    margin-bottom: 20px;
-    color: rgba(255, 255, 255, 0.8);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .home-container.light .scores-title {
-    color: rgba(0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.8);
 }
 
-.scores-list {
-    list-style: none;
+/* Podio */
+.podium {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
-.scores-list li {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 10px;
+/* Cada lugar */
+.podium-place {
+  flex: 1;
+  padding: 14px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 12px rgba(76, 175, 239, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.4s ease;
+  animation: rise 1s ease;
 }
 
-.home-container.light .scores-list li {
-    color: rgba(0, 0, 0, 0.5);
+/* Animación de entrada */
+@keyframes rise {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
+/* Posiciones diferentes */
+.place-1 {
+  flex: 1.4;
+  background: linear-gradient(135deg, rgba(76,175,239,0.8), rgba(0,191,255,0.6));
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 0 18px rgba(76,175,239,0.6);
+}
+
+.place-2 {
+  flex: 1.2;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.place-3 {
+  flex: 1.2;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Elementos internos */
+.position {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.username {
+  font-size: 15px;
+  font-weight: 600;
+  color: inherit;
+  margin-bottom: 4px;
+}
+
+.points {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* Nota */
 .scores-note {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.3);
-    margin-top: 15px;
-    font-style: italic;
+  font-size: 12px;
+  opacity: 0.6;
+  font-style: italic;
+  margin-top: 10px;
 }
 
-.home-container.light .scores-note {
-    color: rgba(0, 0, 0, 0.3);
-}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -515,6 +606,33 @@ body.light {
     transition: transform 0.1s ease;
     z-index: 2;
 }
+
+.wind-particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.home-container.light .wind-particle {
+    background: rgba(0, 0, 0, 0.8);
+}
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: float 8s infinite linear;
+}
+
+.home-container.light .particle {
+    background: rgba(0, 0, 0, 0.2);
+}
+
 
 .wind-particle {
     position: absolute;
