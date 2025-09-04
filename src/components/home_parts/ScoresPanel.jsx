@@ -53,7 +53,7 @@ const ScoresPanel = () => {
 
   return (
     <div className="scores-panel">
-      <h2 className="scores-title">🏆 Mejores Puntuaciones</h2>
+      <h2 className="scores-title">🏆 THE TOP</h2>
 
       <div className="podium">
         {topScores.slice(0, 3).map((score, index) => (
@@ -70,7 +70,7 @@ const ScoresPanel = () => {
         ))}
       </div>
 
-      <p className="scores-note">⚡ Menos pasos = mejor puntuación</p>
+      <p className="scores-note">⚡ More steps = Higher score</p>
     </div>
   );
 };

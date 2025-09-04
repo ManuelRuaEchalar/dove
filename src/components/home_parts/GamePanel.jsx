@@ -8,20 +8,12 @@ const GamePanel = ({ theme, gameStyle }) => {
   const [score] = useState(0);
   const navigate = useNavigate();
 
-  // Obtener el tema actual del body
-  const isDarkMode = document.body.classList.contains('dark');
-
-  const handleStartGame = async () => {  // ← Corrección aquí
+  const handleStartGame = async () => {
     try {
       const result = await apiRequest('/game/start', 'POST');
-      // Pasar el tema y el gameId como estado de navegación
       console.log("partida iniciada con ID:", result.gameId);
       navigate('/game', {
-        state: {
-          theme,       // dark o light
-          gameStyle:gameStyle,   // abstract o dove
-          gameId: result.gameId
-        }
+        state: { theme, gameStyle, gameId: result.gameId }
       });
     } catch (error) {
       console.error('Error al iniciar el juego:', error.message);
@@ -36,12 +28,12 @@ const GamePanel = ({ theme, gameStyle }) => {
         onClick={handleStartGame}
         disabled={isLoading}
       >
-        {isLoading ? 'Cargando...' : 'Iniciar Juego'}
+        {isLoading ? 'Loading...' : '▶ Play'}
       </button>
 
       {showScore && (
         <div className="final-score">
-          Puntuación: {score} pasos
+          Score: {score} steps
         </div>
       )}
     </div>

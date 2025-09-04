@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { apiRequest } from '../../api';
 
-const Form = ({ gameId, token }) => {
+const Form = ({ gameId, token, onClose }) => {
   const [username, setUsername] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,13 +17,11 @@ const Form = ({ gameId, token }) => {
     setIsLoading(true);
 
     try {
-      const result = await apiRequest('/game/register-top3', 'POST', {
-        gameId: gameId,
-        username: username,
-        token: token
+      await apiRequest('/game/register-top3', 'POST', {
+        gameId,
+        username,
+        token
       });
-      
-      // Si llegamos aquí, la petición fue exitosa
       setIsSubmitted(true);
     } catch (error) {
       console.error('Error al registrar nombre:', error.message);
@@ -31,36 +29,41 @@ const Form = ({ gameId, token }) => {
     }
   };
 
-  // Si ya se envió, mostrar solo el mensaje de confirmación
-  if (isSubmitted) {
-    return (
-      <div className="form-panel">
-        <div className="success-message">
-          <h3>¡Registro exitoso!</h3>
-          <p>Tu puntuación ha sido guardada correctamente.</p>
-        </div>
-      </div>
-    );
-  }
+  // Cerrar automáticamente 2 segundos después de enviar
+  useEffect(() => {
+    if (isSubmitted) {
+      const timer = setTimeout(() => {
+        onClose?.();
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSubmitted, onClose]);
 
-  // Mostrar el formulario
   return (
-    <div className="form-panel">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Enter your username"
-          className="username-input"
-          disabled={isLoading}
-        />
-        <input type="hidden" name="gameId" value={gameId} />
-        <input type="hidden" name="token" value={token} />
-        <button type="submit" className="submit-button" disabled={isLoading}>
-          {isLoading ? 'Submitting...' : 'Submit'}
-        </button>
-      </form>
+    <div className="form-overlay">
+      <div className="form-modal">
+        {!isSubmitted ? (
+          <form onSubmit={handleSubmit}>
+            <h2 className="form-title">Nuevo récord 🎉</h2>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Ingresa tu nombre"
+              className="username-input"
+              disabled={isLoading}
+            />
+            <button type="submit" className="submit-button" disabled={isLoading}>
+              {isLoading ? 'Enviando...' : 'Guardar'}
+            </button>
+          </form>
+        ) : (
+          <div className="success-message">
+            <h3>¡Registro exitoso!</h3>
+            <p>Tu puntuación fue guardada.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
