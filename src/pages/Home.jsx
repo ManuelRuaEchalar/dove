@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import ThemeToggle from '../components/home_parts/ThemeToggle';
 import Particles from '../components/home_parts/Particles';
@@ -13,6 +13,7 @@ const Home = () => {
   const location = useLocation();
 
   const [formData, setFormData] = useState(null);
+  const scoresPanelRef = useRef(null);
 
   useEffect(() => {
     if (location.state?.gameId && location.state?.token) {
@@ -27,6 +28,13 @@ const Home = () => {
     }
   }, [location.state]);
 
+  const handleScoreSubmitted = () => {
+    // Llamar al método de actualización del ScoresPanel
+    if (scoresPanelRef.current && scoresPanelRef.current.refreshScores) {
+      scoresPanelRef.current.refreshScores();
+    }
+  };
+
   return (
     <div className={`home-container ${mode}`}>
       <ThemeToggle
@@ -39,7 +47,7 @@ const Home = () => {
 
       <div className="main-content">
         <div className="content-grid">
-          <ScoresPanel />
+          <ScoresPanel ref={scoresPanelRef} />
           <GamePanel theme={mode} gameStyle={gameStyle} />
           <IntroPanel />
 
@@ -48,6 +56,7 @@ const Home = () => {
               gameId={formData.gameId}
               token={formData.token}
               onClose={() => setFormData(null)}
+              onScoreSubmitted={handleScoreSubmitted}
             />
           )}
         </div>

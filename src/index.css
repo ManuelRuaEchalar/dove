@@ -400,28 +400,70 @@ body.light {
     .theme-toggle {
         top: 20px;
         right: 20px;
+        margin-bottom: 30px;
     }
     
     .main-content {
-        padding: 0 20px;
+        padding: 0 25px;
     }
     
     .content-grid {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 30px;
         text-align: center;
+        max-width: 350px;
+        margin: 0 auto;
     }
     
     .intro-panel,
     .scores-panel {
         text-align: center;
+        margin-top: 100px;
+        max-width: 320px;
+        padding: 22px 24px;
     }
     
     .intro-panel h1 {
-        font-size: 28px;
+        font-size: 26px;
+    }
+    
+    .game-panel {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+    
+    .play-button {
+        padding: 14px 32px;
+        font-size: 16px;
+    }
+    
+    .scores-panel {
+        max-width: 320px;
+        padding: 28px 20px;
+    }
+    
+    .scores-title {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    
+    .podium-place {
+        padding: 16px 12px;
+    }
+    
+    .position {
+        font-size: 22px;
+        margin-bottom: 8px;
+    }
+    
+    .username {
+        font-size: 16px;
+    }
+    
+    .points {
+        font-size: 14px;
     }
 }
-
 
 
 /* Game Styles */
@@ -644,4 +686,61 @@ body.light {
     border-radius: 50%;
     pointer-events: none;
     z-index: 1;
+}
+
+/* Cloud Component Styles */
+.cloud {
+  width: 120px;
+  height: 60px;
+  background: #ECEFF1;
+  box-shadow: 10px 10px rgba(0,0,0,0.1);
+  border-radius: 50px;
+  pointer-events: none;
+  position: absolute;
+}
+
+.cloud::after, .cloud::before {
+  content: "";
+  position: relative;
+  display: inline-block;
+  background: inherit;
+  border-radius: inherit;
+}
+
+.cloud::after {
+  width: 40px;
+  height: 40px;
+  top: -80px;
+  left: 20px;
+}
+
+.cloud::before {
+  width: 70px;
+  height: 70px;
+  top: -30px;
+  left: 50px;
+}
+
+/* Estrellas para modo dark */
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star.twinkle {
+  animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
 }

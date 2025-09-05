@@ -1,28 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { apiRequest } from '../../api';
 
-const ScoresPanel = () => {
+const ScoresPanel = forwardRef((props, ref) => {
   const [topScores, setTopScores] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const loadLeaderboard = async () => {
-      try {
-        const result = await apiRequest('/leaderboard');
-        if (result.leaderboard.length === 0) {
-          setTopScores([]);
-        } else {
-          setTopScores(result.leaderboard);
-        }
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
+  const loadLeaderboard = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const result = await apiRequest('/leaderboard');
+      if (result.leaderboard.length === 0) {
+        setTopScores([]);
+      } else {
+        setTopScores(result.leaderboard);
       }
-    };
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
     loadLeaderboard();
   }, []);
+
+  // Exponer método refreshScores al componente padre
+  useImperativeHandle(ref, () => ({
+    refreshScores: loadLeaderboard
+  }));
 
   if (isLoading) {
     return (
@@ -58,7 +66,7 @@ const ScoresPanel = () => {
       <div className="podium">
         {topScores.slice(0, 3).map((score, index) => (
           <div
-            key={index}
+            key={score.id || index}
             className={`podium-place place-${index + 1}`}
           >
             <span className="position">
@@ -73,6 +81,8 @@ const ScoresPanel = () => {
       <p className="scores-note">⚡ More steps = Higher score</p>
     </div>
   );
-};
+});
+
+ScoresPanel.displayName = 'ScoresPanel';
 
 export default ScoresPanel;

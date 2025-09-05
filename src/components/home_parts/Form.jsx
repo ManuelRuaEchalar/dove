@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { apiRequest } from '../../api';
 
-const Form = ({ gameId, token, onClose }) => {
+const Form = ({ gameId, token, onClose, onScoreSubmitted }) => {
   const [username, setUsername] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +23,11 @@ const Form = ({ gameId, token, onClose }) => {
         token
       });
       setIsSubmitted(true);
+      
+      // Notificar al componente padre que se guardó la puntuación
+      if (onScoreSubmitted) {
+        onScoreSubmitted();
+      }
     } catch (error) {
       console.error('Error al registrar nombre:', error.message);
       setIsLoading(false);

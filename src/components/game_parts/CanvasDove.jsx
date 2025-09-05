@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { apiRequest } from '../../api';
 import palomaGif from '../../assets/paloma.gif';
 import cuervoGif from '../../assets/cuervo.gif';
+import SkyDecorations from './SkyDecorations'; // Asegúrate de ajustar la ruta
 
 const CanvasDove = ({ theme, gameId }) => {
   const containerRef = useRef(null);
@@ -312,8 +313,11 @@ const CanvasDove = ({ theme, gameId }) => {
     };
   }, [gameId, theme]);
 
-  return (
+return (
     <div ref={containerRef} id="gameCanvas" className={`game-canvas ${theme}`} style={{ position: 'relative' }}>
+      {/* Añadimos el componente de decoraciones */}
+      <SkyDecorations theme={theme} gameRunning={stateRef.current.gameRunning} />
+      
       <div 
         ref={doveRef} 
         id="dove" 
@@ -324,7 +328,8 @@ const CanvasDove = ({ theme, gameId }) => {
           height: '120px',
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center'
+          backgroundPosition: 'center',
+          zIndex: 2 // Aseguramos que la paloma esté sobre las decoraciones
         }} 
       />
     </div>
